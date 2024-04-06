@@ -178,6 +178,7 @@ if [ "$SSL_DIRECTORY" = "OFF" ]; then
    sed -i '' "s|LISTEN_PORT|80|" "${PWD}/includes/httpd.conf"
    sed -i '' "s|SSL_OFF_|# |" "${PWD}/includes/nextcloud.conf"
    sed -i '' "s|SSL_OFF_|# |" "${PWD}/includes/httpd.conf"
+   sed -i '' "s|Header|# Header|" "${PWD}/includes/nextcloud.conf"
 else
    sed -i '' "s|LISTEN_PORT|443|" "${PWD}/includes/nextcloud.conf"
    sed -i '' "s|LISTEN_PORT|443|" "${PWD}/includes/httpd.conf"
