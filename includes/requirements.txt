@@ -37,6 +37,7 @@ php82-pecl-smbclient
 php82-phar
 php82-posix
 php82-session
+php82-sodium
 php82-simplexml
 php82-sysvsem
 php82-xml

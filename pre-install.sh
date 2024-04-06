@@ -8,7 +8,7 @@ fi
 
 #
 # Copy the default config, ready for editing, and pre-populate the IP address
-cp install.conf.sample install.conf
+cp sample.conf install.conf
 ip_address=$(ifconfig | sed -n '/.inet /{s///;s/ .*//;p;}' | head -1)
 sed -i '' "s|IP_ADDRESS_VALUE|${ip_address}|" install.conf
 

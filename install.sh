@@ -50,12 +50,12 @@ pkg upgrade -y
 # Install required packages
 xargs pkg install -y < "${PWD}/includes/requirements.txt"
 
-# Check if not running in a jail + CREATE_DATASETS=true
+# Check if not running in a jail + CREATE_DATASET_*=true
 # then create datasets for mariaDB's databases and log files that are optimised
 # Also create dataset for nextcloud data - this is not useful if you have multiple datasets
 # because it creates it under the root dataset, so modify accordingly, or turn off and create as a directory
 # use recommended settings from this script as a guide.
-if [ "$(sysctl -n security.jail.jailed)" -ne 1 ] && [ "$CREATE_DATASETS" = "true" ]; then
+if [ "$(sysctl -n security.jail.jailed)" -ne 1 ] && [ "$CREATE_DATASET_MARIADB" = "true" ]; then
 	# Remove the directories created by MariaDB so that we can create new ZFS datasets in their place.
 	rm -r /var/db/mysql
 	rm -r /var/log/mysql
@@ -73,6 +73,9 @@ if [ "$(sysctl -n security.jail.jailed)" -ne 1 ] && [ "$CREATE_DATASETS" = "true
 	zfs create -o recordsize=128K -o aclmode=restricted -o mountpoint=/var/log/mysql -o primarycache=metadata -o compression=lz4 "$zfs_dataset"/mariadb_logs
 	# Set ownership to the MySQL user for both datasets
 	chown -R mysql:mysql /var/db/mysql /var/log/mysql
+fi
+
+if [ "$(sysctl -n security.jail.jailed)" -ne 1 ] && [ "$CREATE_DATASET_DATA" = "true" ]; then
 	# Create Nextcloud dataset with the desired properties
 	zfs create -o recordsize=16K -o aclmode=restricted -o mountpoint="${DATA_DIRECTORY}" -o primarycache=metadata -o compression=lz4 "${zfs_dataset}/${DATASET}"
 	# Set ownership to the www user for the dataset
