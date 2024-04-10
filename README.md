@@ -28,6 +28,7 @@ This script follows recommended configuration as per https://docs.nextcloud.com/
 * PHP 8.2 (plus all required php-extensions)
 * Redis
 * ClamAV
+* SSL Certificate (Let's Encrypt) using `certbot`
 
 ------------
 
