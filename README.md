@@ -4,6 +4,12 @@ Script to automate installation of Nextcloud on FreeBSD13+ and HardenedBSD13+
 The finished installation passes all Nextcloud configuration checks.
 This script follows recommended configuration as per https://docs.nextcloud.com/server/stable/admin_manual/installation/system_requirements.html
 
+## Requirements
+
+* Fresh install of FreeBSD 13+ / HardenedBSD 13+
+* Lib32 for integrated DocumentServer support (this is the plugin version)
+* ZFS. The pre-installer creates a new boot environment, which is not supported on UFS.
+
 ## Instructions
 
 0. Read the instructions, and the scripts! :)
@@ -29,6 +35,7 @@ This script follows recommended configuration as per https://docs.nextcloud.com/
 * Redis
 * ClamAV
 * SSL Certificate (Let's Encrypt) using `certbot`
+* Plugin version of the OnlyOffice document server, as a seperate step
 
 ------------
 
