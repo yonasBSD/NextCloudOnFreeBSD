@@ -33,11 +33,8 @@ if [ "$hbsd_test" ] then
     exit 1
 fi
 
-# Check lib32 support #
-if [ -d "/usr/lib32" ]; then
-    lib32=true
-else
-    lib32=false
+# Check for lib32 support and install if not present
+if [ ! -d "/usr/lib32" ]; then
     pkg update
     pkg upgrade -y
     pkg install -y lib32
