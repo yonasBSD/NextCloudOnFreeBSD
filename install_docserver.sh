@@ -24,22 +24,20 @@ if [ "$(id -u)" -ne 0 ]; then
    exit 1
 fi
 
+# Check lib32 support #
+if [ -d "/usr/lib32" ]; then
+    lib32=true
+else
+    lib32=false
+fi
+
 # Check if HBSD is present in uname string
 hbsd_test=$(uname -a | grep -o 'HBSD')
 
 # Verify FreeBSD with lib32 support
-if [ "$hbsd_test" ] then
+if [ "$hbsd_test" ] || ! $lib32; then
     echo "This script can only be run on FreeBSD with lib32 support."
     exit 1
-fi
-
-# Check for lib32 support and install if not present
-if [ ! -d "/usr/lib32" ]; then
-    pkg update
-    pkg upgrade -y
-    pkg install -y lib32
-    echo 'ldconfig32_enable="YES"' >> /etc/rc.conf
-    service ldconfig restart
 fi
 
 # Install required packages and then start services
