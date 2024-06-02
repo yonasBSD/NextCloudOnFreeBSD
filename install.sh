@@ -123,19 +123,6 @@ sysrc redis_enable="YES"
 sysrc clamav_clamd_enable="YES"
 sysrc clamav_freshclam_enable="YES"
 
-#
-# Start services
-#
-service sendmail start
-service redis start
-apachectl start
-service mysql-server start
-service php-fpm start
-service clamav-clamd onestart
-
-# Update virus definitions again to report update to daemon
-freshclam --quiet
-
 # Add user `www` to group `redis`
 pw usermod www -G redis
 
@@ -152,13 +139,26 @@ elif [ "$SSL_DIRECTORY" = "PUBLIC" ]; then
    sed -i '' "s|nextcloud.crt|fullchain.pem|" "${PWD}/includes/nextcloud.conf"
    sed -i '' "s|nextcloud.key|privkey.pem|" "${PWD}/includes/nextcloud.conf"
    pkg install -y security/py-certbot-apache
-   certbot certonly --standalone --agree-tos -n -d "$HOST_NAME"
+   certbot certonly --standalone --agree-tos --email "$EMAIL_ADDRESS" -n -d "$HOST_NAME"
 else
    mkdir -p "${SSL_DIRECTORY}"
    chown www:www "${SSL_DIRECTORY}"
    OPENSSL_REQUEST="/C=${COUNTRY_CODE}/CN=${HOST_NAME}"
    openssl req -x509 -nodes -days 3652 -sha512 -subj "$OPENSSL_REQUEST" -newkey rsa:2048 -keyout "${SSL_DIRECTORY}/nextcloud.key" -out "${SSL_DIRECTORY}/nextcloud.crt"
 fi
+
+#
+# Start services
+#
+service sendmail start
+service redis start
+apachectl start
+service mysql-server start
+service php-fpm start
+service clamav-clamd onestart
+
+# Update virus definitions again to report update to daemon
+freshclam --quiet
 
 #
 # Copy pre-writting config files and edit in place

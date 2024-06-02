@@ -6,7 +6,7 @@ vim
 apache24
 clamav
 ffmpeg
-mariadb106-server
+mariadb1011-server
 redis
 sendmail
 php83
