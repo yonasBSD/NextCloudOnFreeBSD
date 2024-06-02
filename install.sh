@@ -242,6 +242,7 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-indices
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-columns
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:convert-filecache-bigint --no-interaction
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:mimetype:update-db
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set maintenance_window_start --type=integer --value=1
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set default_phone_region --value="${COUNTRY_CODE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logtimezone --value="${TIME_ZONE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logdateformat --value="Y-m-d H:i:s T"
@@ -322,6 +323,7 @@ fi
 
 # Set Nextcloud to run maintenace tasks as a cron job
 sed -i '' "s|WWW_DIR|${WWW_DIR}|" "${PWD}/includes/www-crontab"
+sed -i '' "s|HOST_NAME|${HOST_NAME}|" "${PWD}/includes/www-crontab"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" background:cron
 crontab -u www "${PWD}/includes/www-crontab"
 
