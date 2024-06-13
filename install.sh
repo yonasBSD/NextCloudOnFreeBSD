@@ -242,12 +242,13 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-indices
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-columns
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:convert-filecache-bigint --no-interaction
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:mimetype:update-db
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set allow_local_remote_servers --value=true
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set maintenance_window_start --type=integer --value=1
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set default_phone_region --value="${COUNTRY_CODE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logtimezone --value="${TIME_ZONE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logdateformat --value="Y-m-d H:i:s T"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set log_type --value="file"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logfile --value="/var/log/nextcloud/nextcloud.log"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logfile --value="/var/log/nextcloud/${INSTANCE_NAME}.log"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set loglevel --value="2"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logrotate_size --value="104847600"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set filelocking.enabled --value=true
