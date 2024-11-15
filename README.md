@@ -1,12 +1,12 @@
 # NextCloud on FreeBSD
 
-Script to automate installation of Nextcloud on FreeBSD13+ and HardenedBSD13+
+Script to automate installation of Nextcloud on FreeBSD14+ and HardenedBSD14+
 The finished installation passes all Nextcloud configuration checks.
 This script follows recommended configuration as per https://docs.nextcloud.com/server/stable/admin_manual/installation/system_requirements.html
 
 ## Requirements
 
-* Fresh install of FreeBSD 13+ / HardenedBSD 13+
+* Fresh install of FreeBSD 14+ / HardenedBSD 14+
 * Lib32 for integrated DocumentServer support (this is the plugin version)
 * ZFS. The pre-installer creates a new boot environment, which is not supported on UFS.
 
@@ -28,9 +28,9 @@ This script follows recommended configuration as per https://docs.nextcloud.com/
 
 **Installs the following:**
 
-* Nextcloud 29
+* Nextcloud 30
 * Apache 2.4
-* MariaDB 10.11
+* MariaDB 11.4
 * PHP 8.3 (plus all required php-extensions)
 * Redis
 * ClamAV
