@@ -3,7 +3,7 @@
 #
 # Install Nextcloud on FreeBSD/HardenedBSD
 #
-# Last update: 2024-04-06
+# Last update: 2024-12-29
 # https://github.com/theGeeBee/NextCloudOnFreeBSD/
 #
 
@@ -191,7 +191,7 @@ if [ "$hbsd_test" ]
 	then
 		sed -i '' "s|pcre.jit=1|pcre.jit=0|" "${PWD}/includes/php.ini"
 		sed -i '' "s|opcache.jit = 1255|opcache.jit = 0|" "${PWD}/includes/php.ini"
-		sed -i '' "s|opcache.jit_buffer_size = 128M|opcache.jit_buffer_size = 0|" "${PWD}/includes/php.ini"
+		sed -i '' "s|opcache.jit_buffer_size = 8M|opcache.jit_buffer_size = 0|" "${PWD}/includes/php.ini"
 	fi
 mkdir /usr/local/etc/apache24/vhosts
 cp -f "${PWD}/includes/httpd.conf" /usr/local/etc/apache24/
