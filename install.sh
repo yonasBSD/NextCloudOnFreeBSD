@@ -273,7 +273,7 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:update:htaccess
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_smtpmode --value="sendmail"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_sendmailmode --value="smtp"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_domain --value="${HOST_NAME}"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_from_address --value="${EMAIL_ADDRESS}"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_from_address --value="${SERVER_EMAIL}"
 # Disable contactsinteraction because the behaviour is unwanted, and confusing
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" app:disable contactsinteraction
 # Enable external storage support (Example: mount a SMB share in Nextcloud).
@@ -322,7 +322,7 @@ if [ "$ENCRYPT_DATA" = "true" ]; then
 	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" encryption:enable
 fi
 
-# Set Nextcloud to run maintenace tasks as a cron job
+# Set Nextcloud to run maintenance tasks as a cron job
 sed -i '' "s|WWW_DIR|${WWW_DIR}|" "${PWD}/includes/www-crontab"
 sed -i '' "s|HOST_NAME|${HOST_NAME}|" "${PWD}/includes/www-crontab"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" background:cron
