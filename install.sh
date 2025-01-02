@@ -154,8 +154,8 @@ service sendmail start
 service redis start
 apachectl start
 service mysql-server start
-service php-fpm start
-service clamav-clamd onestart
+service php_fpm start
+service clamav_clamd onestart
 
 # Update virus definitions again to report update to daemon
 freshclam --quiet
@@ -206,7 +206,7 @@ cp -f "${PWD}/includes/my.cnf" /usr/local/etc/mysql/
 # Restart Services for modified configuration to take effect
 #
 apachectl restart
-service php-fpm restart
+service php_fpm restart
 service redis restart
 service mysql-server restart
 
@@ -329,7 +329,8 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" background:cron
 crontab -u www "${PWD}/includes/www-crontab"
 
 # Create reference file
-cat >> "/root/${HOST_NAME}_reference.txt" <<EOL
+if [ "$SSL_DIRECTORY" = "OFF" ]; then
+    cat >> "/root/${HOST_NAME}_reference.txt" <<EOL
 Nextcloud installation details:
 ===============================
 
@@ -349,6 +350,28 @@ Database password : ${DB_PASSWORD}
 DB root password  : ${DB_ROOT_PASSWORD}
 
 EOL
+else
+    cat >> "/root/${HOST_NAME}_reference.txt" <<EOL
+Nextcloud installation details:
+===============================
+
+Server address : https://${HOST_NAME} or https://${IP_ADDRESS}
+Data directory : ${DATA_DIRECTORY}
+
+Nextcloud GUI Login:
+--------------------
+Username : ${ADMIN_USERNAME}
+Password : ${ADMIN_PASSWORD}
+
+MariaDB Information:
+------------------
+Database name     : ${DB_NAME}
+Database username : ${DB_USERNAME}
+Database password : ${DB_PASSWORD}
+DB root password  : ${DB_ROOT_PASSWORD}
+
+EOL
+fi
 
 #
 # All done!

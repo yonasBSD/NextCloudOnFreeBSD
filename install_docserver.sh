@@ -2,7 +2,7 @@
 
 #
 # Install Document Server add-on for NextCloud
-# This is untested on NC28; please report issues
+# This is untested on NC30; please report issues
 # Last update: 2024-04-14
 # https://github.com/theGeeBee/NextCloudOnFreeBSD/
 #
