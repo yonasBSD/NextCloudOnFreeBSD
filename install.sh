@@ -3,7 +3,7 @@
 #
 # Install Nextcloud on FreeBSD/HardenedBSD
 #
-# Last update: 2024-12-29
+# Last update: 2025-01-02
 # https://github.com/theGeeBee/NextCloudOnFreeBSD/
 #
 
