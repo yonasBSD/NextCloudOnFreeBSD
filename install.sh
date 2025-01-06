@@ -112,6 +112,11 @@ fi
 sysctl kern.ipc.somaxconn=1024
 echo "kern.ipc.somaxconn=1024" >> /etc/sysctl.conf
 
+# Fix that allows memories app to load correctly, should you choose to install it
+
+ln -s /usr/local/bin/perl /usr/bin/perl
+ln -s /usr/local/bin/perl5 /usr/bin/perl5
+
 #
 # Enable services
 #
