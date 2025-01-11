@@ -247,18 +247,18 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-indices
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:add-missing-columns
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" db:convert-filecache-bigint --no-interaction
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:mimetype:update-db
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set allow_local_remote_servers --value=true
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set maintenance_window_start --type=integer --value=1
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set allow_local_remote_servers --value=true --type=boolean
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set maintenance_window_start --value=1 --type=integer
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set default_phone_region --value="${COUNTRY_CODE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logtimezone --value="${TIME_ZONE}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logdateformat --value="Y-m-d H:i:s T"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set log_type --value="file"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set log_type --value=file
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logfile --value="/var/log/nextcloud/${INSTANCE_NAME}.log"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set loglevel --value="2"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logrotate_size --value="104847600"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set filelocking.enabled --value=true
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set loglevel --value=2 --type=integer
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set logrotate_size --value=104847600 --type=integer
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set filelocking.enabled --value=true --type=boolean
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set memcache.local --value="\OC\Memcache\APCu"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set redis host --value="/var/run/redis/redis.sock"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set redis host --value=/var/run/redis/redis.sock
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set redis port --value=0 --type=integer
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set memcache.distributed --value="\OC\Memcache\Redis"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set memcache.locking --value="\OC\Memcache\Redis"
@@ -271,12 +271,12 @@ else
 	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set trusted_domains 1 --value="${HOST_NAME}"
 	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set overwrite.cli.url --value="https://${IP_ADDRESS}"
 fi
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set overwriteprotocol --value="https"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set htaccess.RewriteBase --value="/"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set overwriteprotocol --value=https
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set htaccess.RewriteBase --value=/
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:update:htaccess
 # Set Nextcloud to use sendmail (you can change this later in the GUI)
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_smtpmode --value="sendmail"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_sendmailmode --value="smtp"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_smtpmode --value=sendmail
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_sendmailmode --value=smtp
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_domain --value="${HOST_NAME}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_from_address --value="${SERVER_EMAIL}"
 # Disable contactsinteraction because the behaviour is unwanted, and confusing
@@ -285,7 +285,7 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" app:disable contactsinteraction
 # Users are not allowed to mount external storage, but can be allowed under Settings -> Admin -> External Storage
 if [ "$EXTERNAL_STORAGE" = "true" ]; then
 	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" app:enable files_external
-	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_external allow_user_mounting --value="no"
+	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_external allow_user_mounting --value=no
 	sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_external user_mounting_backends --value="ftp,dav,owncloud,sftp,amazons3,swift,smb,\\OC\\Files\\Storage\\SFTP_Key,\\OC\\Files\\Storage\\SMB_OC"
 fi
 
@@ -311,11 +311,11 @@ clear
 echo "Now installing and configuring Antivirus for File using ClamAV..."
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" app:install files_antivirus
 ### set correct value for path on FreeBSD and set default action
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_mode --value="socket"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_socket --value="/var/run/clamav/clamd.sock"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_stream_max_length --value="104857600"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_infected_action --value="only_log"
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set activity notify_notification_virus_detected --value="1"
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_mode --value=socket
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_socket --value=/var/run/clamav/clamd.sock
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_stream_max_length --value=104857600 --type=integer
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set files_antivirus av_infected_action --value=only_log
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:app:set activity notify_notification_virus_detected --value=1 --type=integer
 
 #
 # SERVER SIDE ENCRYPTION 
