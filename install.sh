@@ -276,7 +276,7 @@ sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set htaccess.Rewrite
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" maintenance:update:htaccess
 # Set Nextcloud to use sendmail (you can change this later in the GUI)
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_smtpmode --value=sendmail
-sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_sendmailmode --value=smtp
+sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_sendmailmode --value=pipe
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_domain --value="${HOST_NAME}"
 sudo -u www php "${WWW_DIR}/${HOST_NAME}/occ" config:system:set mail_from_address --value="${SERVER_EMAIL}"
 # Disable contactsinteraction because the behaviour is unwanted, and confusing
